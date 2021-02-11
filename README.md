@@ -1,9 +1,14 @@
-# Bww Bww
+# Homebrew Tap
 
 ## How do I install these formulae?
-`brew install bww/bww/<formula>`
 
-Or `brew tap bww/bww` and then `brew install <formula>`.
+```
+$ brew install bww/stable/<formula>
+```
 
-## Documentation
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+Or:
+
+```
+$ brew tap bww/stable
+$ brew install <formula>
+```

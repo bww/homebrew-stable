@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# where am i?
+me="$0"
+me_home=$(dirname "$0")
+me_home=$(cd "$me_home" && pwd)
+
+# this repo
+repo_home=$(cd "$me_home/.." && pwd)
+
+# arguments
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
+      -p|--product)
+        product="$2"
+        shift;;
+      -v|--version)
+        release_version="$2"
+        shift;;
+      -u|--url)
+        artifact_url="$2"
+        shift;;
+      -w|--work)
+        retain_work="true"
+        ;;
+      *)
+        break;;
+  esac
+  shift # past argument or value
+done
+
+# make sure we have valid product
+if [ -z "$product" ]; then
+  echo "No product specified (use: -p <product>)"
+  exit -1
+fi
+
+# make sure we have valid state
+if [ -z "$release_version" ]; then
+  echo "No version specified (use: -v <version>)"
+  exit -1
+fi
+
+# make sure we have an artifact url
+if [ -z "$artifact_url" ]; then
+  echo "No artifact URL provided (use: -u <url>)"
+  exit -1
+fi
+
+workdir=$(mktemp -d /tmp/formula-${product}.XXXXXX) || exit 1
+if [ ! -z "$retain_work" ]; then
+  echo "--> ${workdir}"
+else
+  trap "(rm -r ${workdir})" EXIT
+fi
+
+formula_path="${repo_home}/Formula/${product}.rb"
+archive_name=$(basename "$artifact_url")
+archive_path="${workdir}/${archive_name}.tgz"
+
+curl -sSL -o "$archive_path" "$artifact_url"
+
+sha256=$(openssl dgst -sha256 "$archive_path")
+sha256=${sha256#* }
+
+cat <<FORMULA> "$formula_path"
+
+class Forego < Formula
+  homepage "https://github.com/bww/${product}"
+  url "${artifact_url}"
+  sha256 "${sha256}"
+  version "${release_version}"
+  
+  def install
+    bin.install "bin/${product}"
+  end
+end
+Formula
+
+FORMULA
