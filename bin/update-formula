@@ -58,6 +58,7 @@ else
 fi
 
 formula_path="${repo_home}/Formula/${product}.rb"
+class_name=$(echo -n "$product" | awk '{print toupper(substr($0,0,1))tolower(substr($0,2))}')
 archive_name=$(basename "$artifact_url")
 archive_path="${workdir}/${archive_name}.tgz"
 
@@ -68,7 +69,7 @@ sha256=${sha256#* }
 
 cat <<FORMULA> "$formula_path"
 
-class Forego < Formula
+class ${class_name} < Formula
   homepage "https://github.com/bww/${product}"
   url "${artifact_url}"
   sha256 "${sha256}"
