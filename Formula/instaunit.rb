@@ -1,9 +1,9 @@
 
 class Instaunit < Formula
   homepage "https://github.com/bww/instaunit"
-  url "https://github.com/instaunit/instaunit/releases/download/v1.18.0/instaunit-06ce33475e68465f70007a8951f8ec5202cf29eb-darwin-amd64.tgz"
-  sha256 "3ca0fc7088be1ff064fd5085e89c47ca9b4652784680db0c9c4362d5139f3fcf"
-  version "v1.18.0"
+  url "https://github.com/instaunit/instaunit/releases/download/v1.18.1/instaunit-e4d6b03f4d7c9aa5c2ce3b6853474c5b0b0ef9a8-darwin-amd64.tgz"
+  sha256 "2e402cab5818a0af92500dc1a51f4d419d05bedaddba0ac7e16a5f8c8d4cd1e0"
+  version "v1.18.1"
   
   def install
     bin.install "bin/instaunit"
