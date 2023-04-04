@@ -6,7 +6,7 @@ class Psctl < Formula
   version "0.2.5-4"
   
   def install
-    bin.install "bin/psctl"
+    bin.install "target/release/psctl"
   end
 end
 Formula

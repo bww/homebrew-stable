@@ -20,6 +20,9 @@ while [[ $# -gt 0 ]]; do
       -v|--version)
         release_version="$2"
         shift;;
+      -b|--binary)
+        binary_path="$2"
+        shift;;
       -u|--url)
         artifact_url="$2"
         shift;;
@@ -62,6 +65,10 @@ class_name=$(echo -n "$product" | awk '{print toupper(substr($0,0,1))tolower(sub
 archive_name=$(basename "$artifact_url")
 archive_path="${workdir}/${archive_name}.tgz"
 
+if [ -z "$binary_path" ]; then
+	binary_path="bin/${product}"
+fi
+
 curl -sSL -o "$archive_path" "$artifact_url"
 
 sha256=$(openssl dgst -sha256 "$archive_path")
@@ -76,7 +83,7 @@ class ${class_name} < Formula
   version "${release_version}"
   
   def install
-    bin.install "bin/${product}"
+    bin.install "${binary_path}"
   end
 end
 Formula
