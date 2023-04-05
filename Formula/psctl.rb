@@ -6,7 +6,7 @@ class Psctl < Formula
   version "0.2.5-12"
   
   def install
-    bin.install "target/x86_64-apple-darwin/release/psctl"
+    bin.install "x86_64-apple-darwin/release/psctl"
   end
 end
 Formula
