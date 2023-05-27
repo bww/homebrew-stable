@@ -1,15 +1,15 @@
 
 class Forego < Formula
   homepage "https://github.com/bww/forego"
-  version "0.16.2-4"
+  version "0.16.3"
   
   on_arm do
-    url "https://github.com/bww/forego/releases/download/v0.16.2-4/forego-c392427c1f91339f655043d98fdf98e0db8f4aa0-darwin-arm64.tgz"
-    sha256 "4e70a895b4b30475f88b4e6ecf06f1127f657f754612e75e9aca26e8dfb07a4f"
+    url "https://github.com/bww/forego/releases/download/v0.16.3/forego-v0.16.3-darwin-arm64.tgz"
+    sha256 "f02d6ac74bd131157e9a6408d86898b8d327f0f6891296993c8b7ecd3bc67c72"
   end
   on_intel do
-    url "https://github.com/bww/forego/releases/download/v0.16.2-4/forego-c392427c1f91339f655043d98fdf98e0db8f4aa0-darwin-amd64.tgz"
-    sha256 "771d9b6389d7a0c4e49f00be8d5ab8a11ecbdf380520c55051642e862392a6c8"
+    url "https://github.com/bww/forego/releases/download/v0.16.3/forego-v0.16.3-darwin-amd64.tgz"
+    sha256 "1f5a2ac651441b93c716c05af37b4d0265f2c9475e86d5b9545c013a4449e566"
   end
   
   def install
