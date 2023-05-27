@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -xeo pipefail
 
 # where am i?
 me="$0"
@@ -24,7 +24,13 @@ while [[ $# -gt 0 ]]; do
         binary_path="$2"
         shift;;
       -u|--url)
-        artifact_url="$2"
+	echo "*** Do not use -u, --url anymore; use --url:amd64, --url:arm64 instead" && exit 1
+        shift;;
+      --url:amd64)
+        artifact_url_amd64="$2"
+        shift;;
+      --url:arm64)
+        artifact_url_arm64="$2"
         shift;;
       -w|--work)
         retain_work="true"
@@ -48,8 +54,14 @@ if [ -z "$release_version" ]; then
 fi
 
 # make sure we have an artifact url
-if [ -z "$artifact_url" ]; then
-  echo "No artifact URL provided (use: -u <url>)"
+if [ -z "$artifact_url_amd64" ]; then
+  echo "No x86_64 artifact URL provided (use: --url:amd64 <url>)"
+  exit -1
+fi
+
+# make sure we have an artifact url
+if [ -z "$artifact_url_arm64" ]; then
+  echo "No Arm64 artifact URL provided (use: --url:arm64 <url>)"
   exit -1
 fi
 
@@ -62,25 +74,38 @@ fi
 
 formula_path="${repo_home}/Formula/${product}.rb"
 class_name=$(echo -n "$product" | awk '{print toupper(substr($0,0,1))tolower(substr($0,2))}')
-archive_name=$(basename "$artifact_url")
-archive_path="${workdir}/${archive_name}.tgz"
 
 if [ -z "$binary_path" ]; then
 	binary_path="bin/${product}"
 fi
 
-curl -sSL -o "$archive_path" "$artifact_url"
+for target in amd64 arm64; do
+  archive_url_target="artifact_url_$target"
+  archive_name=$(basename "${!archive_url_target}")
+  archive_path="${workdir}/${archive_name}"
 
-sha256=$(openssl dgst -sha256 "$archive_path")
-sha256=${sha256#* }
+  curl -sSL -o "$archive_path" "${!archive_url_target}"
+  
+  sha256=$(openssl dgst -sha256 "${archive_path}")
+  sha256=${sha256#* }
+
+  declare sha256_$target="$sha256"
+done
 
 cat <<FORMULA> "$formula_path"
 
 class ${class_name} < Formula
   homepage "https://github.com/bww/${product}"
-  url "${artifact_url}"
-  sha256 "${sha256}"
   version "${release_version}"
+  
+  on_arm do
+    url "${artifact_url_arm64}"
+    sha256 "${sha256_arm64}"
+  end
+  on_intel do
+    url "${artifact_url_amd64}"
+    sha256 "${sha256_amd64}"
+  end
   
   def install
     bin.install "${binary_path}"
