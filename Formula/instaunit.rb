@@ -1,7 +1,7 @@
 
 class Instaunit < Formula
   homepage "https://github.com/bww/instaunit"
-  version "v1.27.0-2"
+  version "v1.27.1"
   
   on_arm do
     url "https://github.com/instaunit/instaunit/releases/download/v1.27.1/instaunit-v1.27.1-darwin-arm64.tgz"
