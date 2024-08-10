@@ -13,7 +13,7 @@ class PubsubCli < Formula
   end
   
   def install
-    bin.install "bin/pubsub"
+    bin.install "pubsub"
   end
 end
 Formula
