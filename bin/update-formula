@@ -73,7 +73,7 @@ else
 fi
 
 formula_path="${repo_home}/Formula/${product}.rb"
-class_name=$(echo -n "$product" | awk '{print toupper(substr($0,0,1))tolower(substr($0,2))}')
+class_name=$(echo -n "$product" | tr -cd '[:alnum:]_' | awk '{print toupper(substr($0,0,1))tolower(substr($0,2))}')
 
 if [ -z "$binary_path" ]; then
 	binary_path="bin/${product}"
