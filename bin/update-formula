@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
         binary_path="$2"
         shift;;
       -u|--url)
-	echo "*** Do not use -u, --url anymore; use --url:amd64, --url:arm64 instead" && exit 1
+        echo "*** Do not use -u, --url anymore; use --url:amd64, --url:arm64 instead" && exit 1
         shift;;
       --url:amd64)
         artifact_url_amd64="$2"
@@ -73,10 +73,10 @@ else
 fi
 
 formula_path="${repo_home}/Formula/${product}.rb"
-class_name=$(echo -n "$product" | tr -cd '[:alnum:]_' | awk '{print toupper(substr($0,0,1))tolower(substr($0,2))}')
+class_name=$(echo -n "$product" | perl -pe 's/(^|-)(\w)/\U$2/g')
 
 if [ -z "$binary_path" ]; then
-	binary_path="bin/${product}"
+  binary_path="bin/${product}"
 fi
 
 for target in amd64 arm64; do

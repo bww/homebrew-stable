@@ -1,5 +1,5 @@
 
-class Pubsubcli < Formula
+class PubsubCli < Formula
   homepage "https://github.com/bww/pubsub-cli"
   version "v0.1.0-4"
   
