@@ -1,15 +1,15 @@
 
 class PubsubCli < Formula
   homepage "https://github.com/bww/pubsub-cli"
-  version "v0.2.0"
+  version "v0.2.1"
   
   on_arm do
-    url "https://github.com/bww/pubsub-cli/releases/download/v0.2.0/pubsub-cli-v0.2.0-darwin-arm64.tgz"
-    sha256 "2bec997e0aecefa3d14bea6c26f7a1645ac972309f2c8bb282710ebdaeedac4f"
+    url "https://github.com/bww/pubsub-cli/releases/download/v0.2.1/pubsub-cli-v0.2.1-darwin-arm64.tgz"
+    sha256 "31a720ea2432fb9363623f4f300137e023d148b0b324f57a5bfa4e20558cc1cb"
   end
   on_intel do
-    url "https://github.com/bww/pubsub-cli/releases/download/v0.2.0/pubsub-cli-v0.2.0-darwin-amd64.tgz"
-    sha256 "d66c47a6395415ef016d7a129f7baeddfda6698e63814a4a70dbe13aacead84c"
+    url "https://github.com/bww/pubsub-cli/releases/download/v0.2.1/pubsub-cli-v0.2.1-darwin-amd64.tgz"
+    sha256 "fe4115d23777a59c6c4648b0751950a1c4eea0ef7ec6e0dbbde650da0762087a"
   end
   
   def install
