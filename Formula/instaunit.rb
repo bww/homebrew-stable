@@ -1,15 +1,15 @@
 
 class Instaunit < Formula
   homepage "https://github.com/bww/instaunit"
-  version "v1.36.0"
+  version "v1.37.0"
   
   on_arm do
-    url "https://github.com/instaunit/instaunit/releases/download/v1.36.0/instaunit-v1.36.0-darwin-arm64.tgz"
-    sha256 "9cbe43a0d19ca36ca1ce0f564841f0bcc6523795fde7f2f790a3e977966e788b"
+    url "https://github.com/instaunit/instaunit/releases/download/v1.37.0/instaunit-v1.37.0-darwin-arm64.tgz"
+    sha256 "f5ba8c6a6986477611e6997faf8621cba2da3cdc407d67a865d96db9a4f3d3c9"
   end
   on_intel do
-    url "https://github.com/instaunit/instaunit/releases/download/v1.36.0/instaunit-v1.36.0-darwin-amd64.tgz"
-    sha256 "d051ae90e1314aa703b5cbaa15ee523e15dade616db277e2a79db1940971f426"
+    url "https://github.com/instaunit/instaunit/releases/download/v1.37.0/instaunit-v1.37.0-darwin-amd64.tgz"
+    sha256 "b88ad692129cb7d6c33e3c3e8b433b09d2f6ce62ac647eb9a57912f09585e3b4"
   end
   
   def install
