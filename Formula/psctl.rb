@@ -1,15 +1,15 @@
 
 class Psctl < Formula
   homepage "https://github.com/bww/psctl"
-  version "0.7.0"
+  version "0.7.1"
   
   on_arm do
-    url "https://github.com/bww/psctl/releases/download/v0.7.0/psctl-v0.7.0-aarch64-apple-darwin.tgz"
-    sha256 "935338af7465d7d970d43ec688706fe06b8304eed30306810c3649a26d77c213"
+    url "https://github.com/bww/psctl/releases/download/v0.7.1/psctl-v0.7.1-aarch64-apple-darwin.tgz"
+    sha256 "39788d1e85605727f014b0dcf9c48293e3abce29cf8bdd4adaa3b3deae24bd41"
   end
   on_intel do
-    url "https://github.com/bww/psctl/releases/download/v0.7.0/psctl-v0.7.0-x86_64-apple-darwin.tgz"
-    sha256 "5983e7a2bc8c5fe816a195dc2934c80c4b91e68f5c293684786b71240b1736b0"
+    url "https://github.com/bww/psctl/releases/download/v0.7.1/psctl-v0.7.1-x86_64-apple-darwin.tgz"
+    sha256 "d7bb2506067085b89d7768e58661198a4b5f53601f8f45f0a76dc8d70835db84"
   end
   
   def install
