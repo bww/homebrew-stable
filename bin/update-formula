@@ -9,6 +9,7 @@ me_home=$(cd "$me_home" && pwd)
 
 # this repo
 repo_home=$(cd "$me_home/.." && pwd)
+repo_owner="bww"
 
 # arguments
 while [[ $# -gt 0 ]]; do
@@ -23,15 +24,18 @@ while [[ $# -gt 0 ]]; do
       -b|--binary)
         binary_path="$2"
         shift;;
-      -u|--url)
-        echo "*** Do not use -u, --url anymore; use --url:amd64, --url:arm64 instead" && exit 1
-        shift;;
       --url:amd64)
         artifact_url_amd64="$2"
         shift;;
       --url:arm64)
         artifact_url_arm64="$2"
         shift;;
+      -u|--url)
+        echo "*** Do not use -u, --url anymore; use --url:amd64, --url:arm64 instead" && exit 1
+        ;;
+      -U|--url:discover)
+        discover_urls="true"
+        ;;
       -w|--work)
         retain_work="true"
         ;;
@@ -53,15 +57,25 @@ if [ -z "$release_version" ]; then
   exit -1
 fi
 
+# trim the 'v' off the release version, if it's present; we'll add this back
+# as needed to normalize it.
+release_version=${release_version#v}
+
+# if we are discovering URLs, build them now
+if [ -n "$discover_urls" ]; then
+  artifact_url_amd64="https://github.com/${repo_owner}/${product}/releases/download/v${release_version}/psctl-v${release_version}-x86_64-apple-darwin.tgz"
+  artifact_url_arm64="https://github.com/${repo_owner}/${product}/releases/download/v${release_version}/psctl-v${release_version}-aarch64-apple-darwin.tgz"
+fi
+
 # make sure we have an artifact url
 if [ -z "$artifact_url_amd64" ]; then
-  echo "No x86_64 artifact URL provided (use: --url:amd64 <url>)"
+  echo "No x86_64 artifact URL provided (use: --url:amd64 <url> or --url:discover)"
   exit -1
 fi
 
 # make sure we have an artifact url
 if [ -z "$artifact_url_arm64" ]; then
-  echo "No Arm64 artifact URL provided (use: --url:arm64 <url>)"
+  echo "No Arm64 artifact URL provided (use: --url:arm64 <url> or --url:discover)"
   exit -1
 fi
 
