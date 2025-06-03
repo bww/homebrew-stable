@@ -57,14 +57,21 @@ if [ -z "$release_version" ]; then
   exit -1
 fi
 
+# resolve the repo owner, if it's provided; this is the case when the product
+# is provided in the canonical form: <owner>/<repo>.
+if [[ "$product" == */* ]]; then
+  repo_owner=$(echo -n "$product" | cut -d'/' -f1)
+  product=$(echo -n "$product" | cut -d'/' -f2)
+fi
+
 # trim the 'v' off the release version, if it's present; we'll add this back
 # as needed to normalize it.
 release_version=${release_version#v}
 
 # if we are discovering URLs, build them now
 if [ -n "$discover_urls" ]; then
-  artifact_url_amd64="https://github.com/${repo_owner}/${product}/releases/download/v${release_version}/psctl-v${release_version}-x86_64-apple-darwin.tgz"
-  artifact_url_arm64="https://github.com/${repo_owner}/${product}/releases/download/v${release_version}/psctl-v${release_version}-aarch64-apple-darwin.tgz"
+  artifact_url_amd64="https://github.com/${repo_owner}/${product}/releases/download/v${release_version}/${product}-v${release_version}-x86_64-apple-darwin.tgz"
+  artifact_url_arm64="https://github.com/${repo_owner}/${product}/releases/download/v${release_version}/${product}-v${release_version}-aarch64-apple-darwin.tgz"
 fi
 
 # make sure we have an artifact url
@@ -109,7 +116,7 @@ done
 cat <<FORMULA> "$formula_path"
 
 class ${class_name} < Formula
-  homepage "https://github.com/bww/${product}"
+  homepage "https://github.com/${repo_owner}/${product}"
   version "${release_version}"
   
   on_arm do
